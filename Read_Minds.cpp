@@ -4,20 +4,6 @@
 #include <algorithm>
 #include <math.h>
 
-//Programming for the Puzzled -- Srini Devadas
-//You Can Read Minds (With a Little Calibration)
-//Five random cards are chosen and one of them is hidden.
-//Given four cards in a particular order, you can figure out what the fifth card is!
-
-//Deck is are a list of strings, each string is a card
-//The order of cards in the list matters.
-//std::vector<char> deck = {"A_C", "A_D", "A_H", "A_S", "2_C", "2_D", "2_H", "2_S", "3_C", "3_D", "3_H", "3_S",
-//      "4_C", "4_D", "4_H", "4_S", "5_C", "5_D", "5_H", "5_S", "6_C", "6_D", "6_H", "6_S",
-  //      "7_C", "7_D", "7_H", "7_S", "8_C", "8_D", "8_H", "8_S", "9_C", "9_D", "9_H", "9_S",
-    //    "10_C", "10_D", "10_H", "10_S", "J_C", "J_D", "J_H", "J_S",
-      //  "Q_C", "Q_D", "Q_H", "Q_S", "K_C", "K_D", "K_H", "K_S"};
-//Given 5 cards, Assistant hides an appropriate card
-//He/she reads out the remaining four cards after choosing their order carefully!
 
 class Card;
 class Deck;
@@ -48,11 +34,7 @@ public:
         name = num + "_" + suit;
 
   }
-  //std::vector<std::string> allCards = {"A_C", "A_D", "A_H", "A_S", "2_C", "2_D", "2_H", "2_S", "3_C", "3_D", "3_H", "3_S",
-    //    "4_C", "4_D", "4_H", "4_S", "5_C", "5_D", "5_H", "5_S", "6_C", "6_D", "6_H", "6_S",
-      //    "7_C", "7_D", "7_H", "7_S", "8_C", "8_D", "8_H", "8_S", "9_C", "9_D", "9_H", "9_S",
-        //  "10_C", "10_D", "10_H", "10_S", "J_C", "J_D", "J_H", "J_S",
-        //  "Q_C", "Q_D", "Q_H", "Q_S", "K_C", "K_D", "K_H", "K_S"};
+
 
   friend std::istream &operator>>(std::istream &is, Card &c)
   {
@@ -139,18 +121,7 @@ Deck Deck::removeCard(Deck d1, Card c1)
 }
 
 Card Deck::hiddenCard (){
-  //  fiveCards
-  int index1;
-  int index2;
-  fiveCards.at(i).suit;
-  for (int i = 0; i < 5; i++){
-    for (int j = i; i < 5; i++){
-      if (fiveCards.at(i).suit == fiveCards.at(j).suit){
-        index1 = i;
-        index2 = j;
-      }
-    }
-  }
+  // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
 
 }
 
@@ -168,11 +139,16 @@ Card Deck::nextThreeCards(){
 int main()
 {
   Deck d;
-
-  std::vector<Card> list_of_cards(5);
-  for (int i = 0; i < 5; i++) {
-    list_of_cards.at(i) = d.cPickCard;
-    d.removeCard;
+  
+  std::vector<Card> fiveCards(5);
+  for(int i = 0; i < 5; i++)
+  {
+    std::cout << "Enter your card";
+    Card c1;
+    std::cin >> c1;
+    fiveCards.push_back(c1);
+    d.removeCard(c1);
   }
+
   return 0;
 }
