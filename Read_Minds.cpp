@@ -49,6 +49,8 @@ public:
       return os;
   }
 
+    std::string Card::getSuit();
+
 };
 
 class Deck
@@ -128,6 +130,9 @@ Card Deck::nextThreeCards(){
   //suit order from greatest to least in value is spades, hearts, clubs, diamonds
 
 }
+std::string Card::getSuit(){
+  return suit;
+}
 
 std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
 {
@@ -139,7 +144,7 @@ std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
   {
     for (int j = i+1; j < 5; i++)
     {
-      if (fiveCards.at(i).suit == fiveCards.at(j).suit)
+      if (fiveCards.at(i).getSuit == fiveCards.at(j).getSuit)
       {
         index1 = i;
         index2 = j;
@@ -156,7 +161,7 @@ std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
 int main()
 {
   Deck d;
-  
+
   std::vector<Card> fiveCards(5);
   for(int i = 0; i < 5; i++)
   {
