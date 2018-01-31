@@ -1,4 +1,4 @@
-allCards#include <iostream>
+#include <iostream>
 #include <map>
 #include <vector>
 #include <algorithm>
@@ -66,7 +66,6 @@ public:
       return os;
   }
 
-
 };
 
 class Deck
@@ -96,17 +95,11 @@ void Deck::initialDeck()
   }
 }
 
-Card Deck::cPickCard(Deck d1)
-{
-  int index = rand() % d1.numCards;
-  return allCards.at(index);
-}
-
-//Card Deck::pPickCard(Deck d1)
-//{
-
-
-//}
+// Card Deck::cPickCard(Deck d1)
+// {
+//   int index = rand() % d1.numCards;
+//   return allCards.at(index);
+// }
 
 Deck Deck::removeCard(Deck d1, Card c1)
 {
@@ -139,7 +132,17 @@ Deck Deck::removeCard(Deck d1, Card c1)
 
 Card Deck::hiddenCard (){
   // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
-
+    int index1;
+  int index2;
+  fiveCards.at(i).suit;
+  for (int i = 0; i < 5; i++){
+    for (int j = i; i < 5; i++){
+      if (fiveCards.at(i).suit == fiveCards.at(j).suit){
+        index1 = i;
+        index2 = j;
+      }
+    }
+  }
 }
 
 Card Deck::firstCard(){
@@ -157,10 +160,15 @@ int main()
 {
   Deck d;
 
-  std::vector<Card> list_of_cards(5);
-  for (int i = 0; i < 5; i++) {
-    list_of_cards.at(i) = d.cPickCard;
-    d.removeCard;
+  std::vector<Card> fiveCards(5);
+  for(int i = 0; i < 5; i++)
+  {
+    std::cout << "Enter your card";
+    Card c1;
+    std::cin >> c1;
+    fiveCards.push_back(c1);
+    d.removeCard(c1);
   }
+
   return 0;
 }
