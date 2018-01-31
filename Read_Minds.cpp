@@ -1,4 +1,4 @@
-allCards#include <iostream>
+#include <iostream>
 #include <map>
 #include <vector>
 #include <algorithm>
@@ -73,6 +73,7 @@ class Deck
 {
   std::vector<Card> allCards;
   int numCards;
+  std::vector<Card> fiveCards;
 
 
 public:
@@ -132,7 +133,18 @@ Deck Deck::removeCard(Deck d1, Card c1)
 }
 
 Card Deck::hiddenCard (){
-  // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
+  //  fiveCards
+  int index1;
+  int index2;
+  fiveCards.at(i).suit;
+  for (int i = 0; i < 5; i++){
+    for (int j = i; i < 5; i++){
+      if (fiveCards.at(i).suit == fiveCards.at(j).suit){
+        index1 = i;
+        index2 = j;
+      }
+    }
+  }
 
 }
 
