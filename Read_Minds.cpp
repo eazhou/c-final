@@ -96,17 +96,11 @@ void Deck::initialDeck()
   }
 }
 
-Card Deck::cPickCard(Deck d1)
-{
-  int index = rand() % d1.numCards;
-  return allCards.at(index);
-}
-
-//Card Deck::pPickCard(Deck d1)
-//{
-
-
-//}
+// Card Deck::cPickCard(Deck d1)
+// {
+//   int index = rand() % d1.numCards;
+//   return allCards.at(index);
+// }
 
 Deck Deck::removeCard(Deck d1, Card c1)
 {
@@ -155,12 +149,6 @@ Card Deck::nextThreeCards(){
 
 int main()
 {
-  Deck d;
 
-  std::vector<Card> list_of_cards(5);
-  for (int i = 0; i < 5; i++) {
-    list_of_cards.at(i) = d.cPickCard;
-    d.removeCard;
-  }
   return 0;
 }
