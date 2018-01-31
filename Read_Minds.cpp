@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
+#include <string.h>
 
 
 class Card;
@@ -11,8 +12,8 @@ class Deck;
 
 class Card
 {
-  std::string name;
-  std::string suit;
+  string name;
+  string suit;
   int num;
 
 public:
@@ -115,17 +116,7 @@ Deck Deck::removeCard(Deck d1, Card c1)
 
 Card Deck::hiddenCard (){
   // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
-    int index1;
-  int index2;
-  fiveCards.at(i).suit;
-  for (int i = 0; i < 5; i++){
-    for (int j = i; i < 5; i++){
-      if (fiveCards.at(i).suit == fiveCards.at(j).suit){
-        index1 = i;
-        index2 = j;
-      }
-    }
-  }
+
 }
 
 Card Deck::firstCard(){
@@ -138,6 +129,29 @@ Card Deck::nextThreeCards(){
 
 }
 
+std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
+{
+  int index1;
+  int index2;
+  std::vector<int> indexes(2);
+
+  for (int i = 0; i < 5; i++)
+  {
+    for (int j = i+1; j < 5; i++)
+    {
+      if (fiveCards.at(i).suit == fiveCards.at(j).suit)
+      {
+        index1 = i;
+        index2 = j;
+        indexes.push_back(i);
+        indexes.push_back(j);
+        return indexes;
+      }
+    }
+  }
+
+}
+
 
 int main()
 {
@@ -147,11 +161,17 @@ int main()
   for(int i = 0; i < 5; i++)
   {
     std::cout << "Enter your card";
-    Card c1;
+    string c1;
     std::cin >> c1;
+    c1.substr(0)
     fiveCards.push_back(c1);
     d.removeCard(c1);
   }
+
+
+
+
+
 
   return 0;
 }
