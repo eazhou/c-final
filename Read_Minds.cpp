@@ -12,8 +12,8 @@ class Deck;
 
 class Card
 {
-  string name;
-  string suit;
+  std::string name;
+  std::string suit;
   int num;
 
 public:
@@ -48,9 +48,8 @@ public:
       os << c.name;
       return os;
   }
-
-    std::string Card::getSuit();
-
+  std::string getSuit();
+  std::string getName();
 };
 
 class Deck
@@ -81,11 +80,17 @@ void Deck::initialDeck()
   }
 }
 
-// Card Deck::cPickCard(Deck d1)
-// {
-//   int index = rand() % d1.numCards;
-//   return allCards.at(index);
-// }
+Card Deck::cPickCard(Deck d1)
+{
+  int index = rand() % d1.numCards;
+  return allCards.at(index);
+}
+
+//Card Deck::pPickCard(Deck d1)
+//{
+
+
+//}
 
 Deck Deck::removeCard(Deck d1, Card c1)
 {
@@ -102,7 +107,9 @@ Deck Deck::removeCard(Deck d1, Card c1)
 
   for(auto card1 : d1.allCards)
   {
-    if(card1.name == c1.name)
+    if(card1.getName() == c1.getName()){
+
+    }
 
   }
 
@@ -116,22 +123,12 @@ Deck Deck::removeCard(Deck d1, Card c1)
   //return d1;
 }
 
-Card Deck::hiddenCard (){
-  // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
 
-}
-
-Card Deck::firstCard(){
-  //finds the first card
-}
-
-Card Deck::nextThreeCards(){
-  //orders the remaning three cards
-  //suit order from greatest to least in value is spades, hearts, clubs, diamonds
-
-}
 std::string Card::getSuit(){
   return suit;
+}
+std::string Card::getName(){
+  return name;
 }
 
 std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
@@ -144,7 +141,7 @@ std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
   {
     for (int j = i+1; j < 5; i++)
     {
-      if (fiveCards.at(i).getSuit == fiveCards.at(j).getSuit)
+      if (fiveCards.at(i).getSuit() == fiveCards.at(j).getSuit())
       {
         index1 = i;
         index2 = j;
@@ -166,9 +163,9 @@ int main()
   for(int i = 0; i < 5; i++)
   {
     std::cout << "Enter your card";
-    string c1;
+    std::string c1;
     std::cin >> c1;
-    c1.substr(0)
+    c1.substr(0);
     fiveCards.push_back(c1);
     d.removeCard(c1);
   }
