@@ -21,7 +21,7 @@
 
 class Card;
 class Deck;
-
+class Game;
 
 class Card
 {
@@ -30,7 +30,7 @@ class Card
   int num;
 
 public:
-  Card(std::string suit, int num) :suit(suit), num(num)
+  Card(std::string suit, int num) : suit(suit), num(num)
   {
       if(num == 11)
         name = "J_" + suit;
@@ -119,7 +119,7 @@ Deck Deck::removeCard(Deck d1, Card c1)
   //  if (position != d1.vCards.end()) // == myVector.end() means the element was not found
   //      d1.vCards.erase(position);
 
-  
+
   for(auto card1 : d1.vCards)
   {
     if(card1.name == c1.name)
@@ -136,11 +136,17 @@ Deck Deck::removeCard(Deck d1, Card c1)
   //return d1;
 }
 
-
-
-
 int main()
 {
+  Deck d;
+
+  std::vector<Card> list_of_cards(5);
+  for (int i = 0; i < 5; i++) {
+    list_of_cards.at(i) = d.cPickCard;
+    d.removeCard;
+  }
+
+  
 
   return 0;
 }
