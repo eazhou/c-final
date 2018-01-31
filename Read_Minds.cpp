@@ -1,4 +1,4 @@
-#include <iostream>
+allCards#include <iostream>
 #include <map>
 #include <vector>
 #include <algorithm>
@@ -21,7 +21,7 @@
 
 class Card;
 class Deck;
-class Game;
+
 
 class Card
 {
@@ -30,7 +30,7 @@ class Card
   int num;
 
 public:
-  Card(std::string suit, int num) : suit(suit), num(num)
+  Card(std::string suit, int num) :suit(suit), num(num)
   {
       if(num == 11)
         name = "J_" + suit;
@@ -48,7 +48,7 @@ public:
         name = num + "_" + suit;
 
   }
-  //std::vector<std::string> vCards = {"A_C", "A_D", "A_H", "A_S", "2_C", "2_D", "2_H", "2_S", "3_C", "3_D", "3_H", "3_S",
+  //std::vector<std::string> allCards = {"A_C", "A_D", "A_H", "A_S", "2_C", "2_D", "2_H", "2_S", "3_C", "3_D", "3_H", "3_S",
     //    "4_C", "4_D", "4_H", "4_S", "5_C", "5_D", "5_H", "5_S", "6_C", "6_D", "6_H", "6_S",
       //    "7_C", "7_D", "7_H", "7_S", "8_C", "8_D", "8_H", "8_S", "9_C", "9_D", "9_H", "9_S",
         //  "10_C", "10_D", "10_H", "10_S", "J_C", "J_D", "J_H", "J_S",
@@ -71,11 +71,12 @@ public:
 
 class Deck
 {
-  std::vector<Card> vCards;
+  std::vector<Card> allCards;
   int numCards;
 
+
 public:
-  Deck(): numCards(52), vCards(vCards){};
+  Deck(): numCards(52), allCards(allCards){};
 
   Card cPickCard(Deck d1);
   //Card pPickCard(Deck d1);
@@ -90,7 +91,7 @@ void Deck::initialDeck()
   {
     for(auto suit : suits)
     {
-      vCards.push_back(Card(suit,num));
+      allCards.push_back(Card(suit,num));
     }
   }
 }
@@ -98,7 +99,7 @@ void Deck::initialDeck()
 Card Deck::cPickCard(Deck d1)
 {
   int index = rand() % d1.numCards;
-  return vCards.at(index);
+  return allCards.at(index);
 }
 
 //Card Deck::pPickCard(Deck d1)
@@ -110,17 +111,17 @@ Card Deck::cPickCard(Deck d1)
 Deck Deck::removeCard(Deck d1, Card c1)
 {
   //std::vector<int>::iterator newVec;
-  //d1.vCards.
-  //newVec = std::remove(d1.vCards.begin(),d1.vCards.end(),c1);
-  //int pos = find(d1.vCards.begin(),d1.vCards.end(),c1)-d1.vCards.begin();
-  //d1.vCards.erase(d1.vCards.begin()+pos);
+  //d1.allCards.
+  //newVec = std::remove(d1.allCards.begin(),d1.allCards.end(),c1);
+  //int pos = find(d1.allCards.begin(),d1.allCards.end(),c1)-d1.allCards.begin();
+  //d1.allCards.erase(d1.allCards.begin()+pos);
 
-  //std::vector<int>::iterator position = std::find(d1.vCards.begin(), d1.vCards.end(), c1);
-  //  if (position != d1.vCards.end()) // == myVector.end() means the element was not found
-  //      d1.vCards.erase(position);
+  //std::vector<int>::iterator position = std::find(d1.allCards.begin(), d1.allCards.end(), c1);
+  //  if (position != d1.allCards.end()) // == myVector.end() means the element was not found
+  //      d1.allCards.erase(position);
 
 
-  for(auto card1 : d1.vCards)
+  for(auto card1 : d1.allCards)
   {
     if(card1.name == c1.name)
 
@@ -129,12 +130,28 @@ Deck Deck::removeCard(Deck d1, Card c1)
   return d1;
 
 
-  //auto it = std::find(d1.vCards.begin(), d1.vCards.end(), c1)
-  //if(it != d1.vCards.end())
-  //  d1.vCards.erase(it);
+  //auto it = std::find(d1.allCards.begin(), d1.allCards.end(), c1)
+  //if(it != d1.allCards.end())
+  //  d1.allCards.erase(it);
 
   //return d1;
 }
+
+Card Deck::hiddenCard (){
+  // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
+
+}
+
+Card Deck::firstCard(){
+  //finds the first card
+}
+
+Card Deck::nextThreeCards(){
+  //orders the remaning three cards
+  //suit order from greatest to least in value is spades, hearts, clubs, diamonds
+
+}
+
 
 int main()
 {
@@ -145,8 +162,5 @@ int main()
     list_of_cards.at(i) = d.cPickCard;
     d.removeCard;
   }
-
-  
-
   return 0;
 }
