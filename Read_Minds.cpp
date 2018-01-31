@@ -3,38 +3,44 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include <string.h>
-
 
 class Card;
 class Deck;
-
 
 class Card
 {
   std::string name;
   std::string suit;
-  int num;
+  std::string faceValue;
 
 public:
-  Card(std::string suit, int num) :suit(suit), num(num)
+  Card(std::string suit, std::string faceValue) :suit(suit), faceValue(faceValue)
   {
-      if(num == 11)
-        name = "J_" + suit;
+    //  if(num == 11)
+      //  name = "J_" + suit;
 
-      else if(num == 12)
-        name = "Q_" + suit;
+      //else if(num == 12)
+        //name = "Q_" + suit;
 
-      else if(num == 13)
-        name = "K_" + suit;
+      //else if(num == 13)
+      //  name = "K_" + suit;
 
-      else if(num == 1)
-        name = "A_" + suit;
+      //else if(num == 1)
+        //name = "A_" + suit;
 
-      else
-        name = num + "_" + suit;
+      //else
+      name = faceValue + "_" + suit;
 
   }
+
+  Card(std::string name) : name(name)
+  {
+    faceValue = name.substr(0);
+    suit = name.substr(2);
+
+  }
+
+  Card(){};
 
 
   friend std::istream &operator>>(std::istream &is, Card &c)
@@ -48,6 +54,7 @@ public:
       os << c.name;
       return os;
   }
+
   std::string getSuit();
   std::string getName();
 };
@@ -62,72 +69,56 @@ class Deck
 public:
   Deck(): numCards(52), allCards(allCards){};
 
-  Card cPickCard(Deck d1);
+  //Card cPickCard(Deck d1);
   //Card pPickCard(Deck d1);
   Deck removeCard(Deck d1, Card c1);
   void initialDeck();
 };
+
+std::string numToValue(int num)
+{
+  std::string faceValue;
+
+  if(num == 11)
+    faceValue = "J";
+
+  else if(num == 12)
+    faceValue = "Q";
+
+  else if(num == 13)
+    faceValue = "K";
+
+  else if(num == 1)
+    faceValue = "A";
+
+  else
+    faceValue = num + "";
+
+  return faceValue;
+}
 
 void Deck::initialDeck()
 {
   std::vector<std::string> suits = {"C","D","H","S"};
   for(int num = 1; num <=13; num++)
   {
+    std::string faceValue;
+    faceValue = numToValue(num);
+    //faceValue = "A";
     for(auto suit : suits)
     {
-      allCards.push_back(Card(suit,num));
+      allCards.push_back(Card(suit,faceValue));
     }
   }
 }
 
-Card Deck::cPickCard(Deck d1)
+std::string Card::getSuit()
 {
-  int index = rand() % d1.numCards;
-  return allCards.at(index);
-}
-
-//Card Deck::pPickCard(Deck d1)
-//{
-
-
-//}
-
-Deck Deck::removeCard(Deck d1, Card c1)
-{
-  //std::vector<int>::iterator newVec;
-  //d1.allCards.
-  //newVec = std::remove(d1.allCards.begin(),d1.allCards.end(),c1);
-  //int pos = find(d1.allCards.begin(),d1.allCards.end(),c1)-d1.allCards.begin();
-  //d1.allCards.erase(d1.allCards.begin()+pos);
-
-  //std::vector<int>::iterator position = std::find(d1.allCards.begin(), d1.allCards.end(), c1);
-  //  if (position != d1.allCards.end()) // == myVector.end() means the element was not found
-  //      d1.allCards.erase(position);
-
-
-  for(auto card1 : d1.allCards)
-  {
-    if(card1.getName() == c1.getName()){
-
-    }
-
-  }
-
-  return d1;
-
-
-  //auto it = std::find(d1.allCards.begin(), d1.allCards.end(), c1)
-  //if(it != d1.allCards.end())
-  //  d1.allCards.erase(it);
-
-  //return d1;
-}
-
-
-std::string Card::getSuit(){
   return suit;
 }
-std::string Card::getName(){
+
+std::string Card::getName()
+{
   return name;
 }
 
@@ -135,7 +126,7 @@ std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
 {
   int index1;
   int index2;
-  std::vector<int> indexes(2);
+  std::vector<int> indexes;
 
   for (int i = 0; i < 5; i++)
   {
@@ -154,22 +145,22 @@ std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
 
 }
 
-
 int main()
 {
-  Deck d;
 
-  std::vector<Card> fiveCards(5);
+  Deck d;
+  Card c1;
+  std::vector<Card> fiveCards;
   for(int i = 0; i < 5; i++)
   {
     std::cout << "Enter your card";
-    std::string c1;
-    std::cin >> c1;
-    c1.substr(0);
-    fiveCards.push_back(c1);
-    d.removeCard(c1);
-  }
+    std::string input1;
+    std::cin >> input1;
 
+    c1 = Card(input1);
+    fiveCards.push_back(c1);
+  //  d.removeCard(c1);
+  }
 
 
 
