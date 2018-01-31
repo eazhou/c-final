@@ -1,9 +1,9 @@
-
 #include <iostream>
 #include <map>
 #include <vector>
 #include <algorithm>
 #include <math.h>
+#include <string.h>
 
 
 class Card;
@@ -12,8 +12,8 @@ class Deck;
 
 class Card
 {
-  std::string name;
-  std::string suit;
+  string name;
+  string suit;
   int num;
 
 public:
@@ -94,7 +94,6 @@ Card Deck::cPickCard(Deck d1)
 
 Deck Deck::removeCard(Deck d1, Card c1)
 {
-  //TODO;
   //std::vector<int>::iterator newVec;
   //d1.allCards.
   //newVec = std::remove(d1.allCards.begin(),d1.allCards.end(),c1);
@@ -122,7 +121,43 @@ Deck Deck::removeCard(Deck d1, Card c1)
   //return d1;
 }
 
+Card Deck::hiddenCard (){
+  // cards are c1,c2,c3,c4,c5 should be in a vector deck d1
 
+}
+
+Card Deck::firstCard(){
+  //finds the first card
+}
+
+Card Deck::nextThreeCards(){
+  //orders the remaning three cards
+  //suit order from greatest to least in value is spades, hearts, clubs, diamonds
+
+}
+
+std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
+{
+  int index1;
+  int index2;
+  std::vector<int> indexes(2);
+  
+  for (int i = 0; i < 5; i++)
+  {
+    for (int j = i+1; j < 5; i++)
+    {
+      if (fiveCards.at(i).suit == fiveCards.at(j).suit)
+      {
+        index1 = i;
+        index2 = j;
+        indexes.push_back(i);
+        indexes.push_back(j);
+        return indexes;
+      }
+    }
+  }
+
+}
 
 
 int main()
@@ -133,31 +168,17 @@ int main()
   for(int i = 0; i < 5; i++)
   {
     std::cout << "Enter your card";
-    Card c1;
+    string c1;
     std::cin >> c1;
+    c1.substr(0) 
     fiveCards.push_back(c1);
     d.removeCard(c1);
   }
 
-  //hidden cards
-
-  int index1;
-  int index2;
-  for (int i = 0; i < 5; i++){
-    for (int j = i; i < 5; i++){
-      if (fiveCards.at(i).suit == fiveCards.at(j).suit){
-        index1 = i;
-        index2 = j;
-      }
-    }
-  }
-
-  //first card
-
-  // Next three card
+  
 
 
-  // checker for the 5th card the user guesses
+
 
   return 0;
 }
