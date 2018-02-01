@@ -213,7 +213,7 @@ std::vector<Card> determineCards(std::vector<Card> fiveCards)
   }
 
   int diff;
-  if (sameSuitCards[0].getNum() > sameSuitCards[1].getNum())
+  if (sameSuitCards[0] > sameSuitCards[1])
     diff = sameSuitCards[0].getNum() - sameSuitCards[1].getNum();
   else
     diff = sameSuitCards[1].getNum() - sameSuitCards[0].getNum();
@@ -253,9 +253,7 @@ std::vector<Card> determineCards(std::vector<Card> fiveCards)
 
   for (int n = 0; n < 3; n++)
   {
-    if (threeCards.at(n) > threeCards.at(min)) {}
-    else if (threeCards.at(n) == threeCards.at(min)) {}
-    else {
+    if (threeCards.at(n) < threeCards.at(min)) {
       min = n;
     }
   }
@@ -333,10 +331,6 @@ int main()
   // fiveCards.push_back(Card("10_H"));
   // fiveCards.push_back(Card("3_H"));
   // fiveCards.push_back(Card("A_H"));
-
-  for (int i=0; i<5; i++) {
-    std::cout << "five Cards [i]: " << fiveCards[i].getNum() << std::endl;
-  }
 
   orderedCards = determineCards(fiveCards);
 
