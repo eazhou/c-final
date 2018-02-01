@@ -47,31 +47,31 @@ public:
 
   Card(std::string name) : name(name)
   {
-    if(name.substr(0,1) == "10")
+    if(name.substr(0,2) == "10")
     {
-      num = 10;
+      num = (int) (10);
       faceValue = "10";
-      suit = name.substr(3);
+      suit = name.substr(3,1);
     }
-    else if(name.substr(0) == "J")
+    else if(name.substr(0,1) == "J")
     {
       num = 11;
       faceValue = "J";
-      suit = name.substr(2);
+      suit = name.substr(2,1);
     }
-    else if(name.substr(0) == "Q")
+    else if(name.substr(0,1) == "Q")
     {
       num = 12;
       faceValue = "Q";
-      suit = name.substr(2);
+      suit = name.substr(2,1);
     }
-    else if(name.substr(0) == "K")
+    else if(name.substr(0,1) == "K")
     {
       num = 13;
       faceValue = "K";
       suit = name.substr(2);
     }
-    else if(name.substr(0) == "A")
+    else if(name.substr(0,1) == "A")
     {
       num = 1;
       faceValue = "A";
@@ -80,7 +80,7 @@ public:
     else
     {
       num = (int) (name.at(0) - '0');
-      faceValue = name.substr(0);
+      faceValue = name.substr(0,1);
       suit = name.substr(2);
     }
   }
@@ -124,7 +124,6 @@ std::string Card::getName()
 //   return faceValue;
 // }
 
-//ALSO DOESN'T WORK FOR SOME REASON (see main for print statements)
 int Card::getNum()
 {
   return num;
@@ -241,15 +240,9 @@ std::vector<Card> determineCards(std::vector<Card> fiveCards)
       threeCards.push_back(fiveCards[k]);
   }
 
-  // for (int a=0; a<threeCards.size(); a++) {
-  //   std::cout << "threeCards[a]: " << threeCards[a] << std::endl;
-  // }
-
   int min = 0;
   int max = 0;
   int mid = 0;
-
-//something wrong w/ this part: putting in 5_C, 3_D, A_H, 3_H, 5_H does not give right ordered triple
 
   for (int m = 0; m < 3; m++)
   {
@@ -260,17 +253,11 @@ std::vector<Card> determineCards(std::vector<Card> fiveCards)
 
   for (int n = 0; n < 3; n++)
   {
-    std::cout << "at n: " << threeCards.at(n) << std::endl;
-    std::cout << "at min: " << threeCards.at(min) << std::endl;
     if (threeCards.at(n) > threeCards.at(min)) {}
     else if (threeCards.at(n) == threeCards.at(min)) {}
     else {
       min = n;
-      std::cout << "n: " << n << std::endl;
-      std::cout << "min: " << min << std::endl;
-      std::cout << threeCards.at(min) << std::endl;
     }
-    std::cout << "bool: " << (threeCards.at(n) > threeCards.at(min)) << std::endl;
   }
 
   for (int p = 0; p < 3; p++)
@@ -278,13 +265,6 @@ std::vector<Card> determineCards(std::vector<Card> fiveCards)
     if ((max != p) && (min != p))
       mid = p;
   }
-
-  std::cout << "max: " << max << std::endl;
-  std::cout << "max card: " << threeCards.at(max) << std::endl;
-  std::cout << "min: " << min << std::endl;
-  std::cout << "min card: " << threeCards.at(min) << std::endl;
-  std::cout << "mid: " << mid << std::endl;
-  std::cout << "mid card: " << threeCards.at(mid) << std::endl;
 
   std::vector<Card> ordered;
   ordered.push_back(visibleCard);
@@ -337,23 +317,22 @@ int main()
   std::vector<Card> fiveCards; //the five cards to be ordered
   std::vector<Card> orderedCards; //visible card, three cards encoding difference, and hidden card
 
-  // COMMENT BACK IN FOR SUBMISSION
-  // for(int i = 0; i < 5; i++)
-  // {
-  //   std::cout << "Enter your card: ";
-  //   std::string input1;
-  //   std::cin >> input1;
-  //
-  //   c1 = Card(input1);
-  //   fiveCards.push_back(c1);
-  // //  d.removeCard(c1);
-  // }
+  for(int i = 0; i < 5; i++)
+  {
+    std::cout << "Enter your card: ";
+    std::string input1;
+    std::cin >> input1;
 
-  fiveCards.push_back(Card("5_S"));
-  fiveCards.push_back(Card("K_D"));
-  fiveCards.push_back(Card("10_H"));
-  fiveCards.push_back(Card("3_H"));
-  fiveCards.push_back(Card("A_H"));
+    c1 = Card(input1);
+    fiveCards.push_back(c1);
+  //  d.removeCard(c1);
+  }
+
+  // fiveCards.push_back(Card("5_S"));
+  // fiveCards.push_back(Card("K_D"));
+  // fiveCards.push_back(Card("10_H"));
+  // fiveCards.push_back(Card("3_H"));
+  // fiveCards.push_back(Card("A_H"));
 
   for (int i=0; i<5; i++) {
     std::cout << "five Cards [i]: " << fiveCards[i].getNum() << std::endl;
