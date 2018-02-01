@@ -87,12 +87,6 @@ Card Deck::cPickCard(Deck d1)
   return allCards.at(index);
 }
 
-//Card Deck::pPickCard(Deck d1)
-//{
-
-
-//}
-
 Deck Deck::removeCard(Deck d1, Card c1)
 {
   //std::vector<int>::iterator newVec;
