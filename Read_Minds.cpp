@@ -9,7 +9,6 @@
 class Card;
 class Deck;
 
-
 class Card
 {
   std::string name;
@@ -24,8 +23,16 @@ public:
 
   Card(std::string name) : name(name)
   {
-  faceValue = name.substr(0);
-  suit = name.substr(2);
+    if(name.substr(0,1) == "10")
+    {
+      faceValue = "10";
+      suit = name.substr(3);
+    }
+    else
+    {
+      faceValue = name.substr(0);
+      suit = name.substr(2);
+    }
   }
 
   Card(){};
@@ -47,16 +54,19 @@ public:
   bool operator==(const Card &c);
 };
 
+//WORKS
 std::string Card::getSuit()
 {
   return suit;
 }
 
+//WORKS
 std::string Card::getName()
 {
   return name;
 }
 
+//WORKS
 bool Card::operator==(const Card &c)
 {
   if ((this->suit == c.suit) && (this->faceValue == c.faceValue)) {
@@ -97,14 +107,16 @@ public:
   Deck(): allCards(allCards){};
 
   Card cPickCard();
-  Deck removeCard(Card c1);
   void initialDeck();
   int size();
+  void removeCard(Card c1);
+  friend std::ostream &operator<<(std::ostream &os, const Deck &d);
 };
 
+//WORKS
 void Deck::initialDeck()
 {
-  std::vector<std::string> suits(4);
+  std::vector<std::string> suits;
   suits.push_back("C");
   suits.push_back("D");
   suits.push_back("H");
@@ -114,7 +126,6 @@ void Deck::initialDeck()
   {
     std::string faceValue;
     faceValue = numToValue(num);
-    //faceValue = "A";
     for(auto suit : suits)
     {
       allCards.push_back(Card(suit,faceValue));
@@ -122,51 +133,41 @@ void Deck::initialDeck()
   }
 }
 
+//WORKS
 int Deck::size()
 {
   return allCards.size();
 }
 
-// Card Deck::cPickCard(Deck d1)
+//WE HAVE A DECK OMG
+std::ostream &operator<<(std::ostream &os, const Deck &d)
+{
+  for (int i=0; i<d.allCards.size(); i++)
+  {
+    os << d.allCards.at(i) << ", ";
+  }
+  return os;
+}
+
+//WORKS
+// Card Deck::cPickCard()
 // {
-//   int index = rand() % d1.allCards.size();
+//   int index = rand() % allCards.size();
 //   return allCards.at(index);
 // }
 
-// Deck Deck::removeCard(Deck d1, Card c1)
+//DOESNT WORK I GIVE UP
+// void Deck::removeCard(Card c1)
 // {
-//   for (int i = 0; i < d1.allCards.size(); i++) {
-//     if (d1.allCards.at(i) == c1) {
-//       d1.allCards.erase(i);
+//   for (int i = 0; i < allCards.size(); i++)
+//   {
+//     std::cout << allCards[i] << std::endl;
+//     if (c1 == allCards[i])
+//     {
+//       std::cout << "YES IT WORKS" << std::endl;
+//       allCards.erase(allCards.begin()+i);
 //     }
 //   }
-//
-//   return d1;
-//   //std::vector<int>::iterator newVec;
-//   //d1.allCards.
-//   //newVec = std::remove(d1.allCards.begin(),d1.allCards.end(),c1);
-//   //int pos = find(d1.allCards.begin(),d1.allCards.end(),c1)-d1.allCards.begin();
-//   //d1.allCards.erase(d1.allCards.begin()+pos);
-//
-//   //std::vector<int>::iterator position = std::find(d1.allCards.begin(), d1.allCards.end(), c1);
-//   //  if (position != d1.allCards.end()) // == myVector.end() means the element was not found
-//   //      d1.allCards.erase(position);
-//
-//
-//   // for(auto card1 : d1.allCards)
-//   // {
-//   //   if(card1.name == c1.name)
-//   //
-//   // }
-//   //
-//   // return d1;
-//
-//
-//   //auto it = std::find(d1.allCards.begin(), d1.allCards.end(), c1)
-//   //if(it != d1.allCards.end())
-//   //  d1.allCards.erase(it);
-//
-//   //return d1;
 // }
 
 // Card Deck::hiddenCard (){
@@ -183,7 +184,7 @@ int Deck::size()
 //   //suit order from greatest to least in value is spades, hearts, clubs, diamonds
 //
 // }
-
+//
 // std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
 // {
 //   int index1;
@@ -212,12 +213,17 @@ int main()
 {
   Deck d;
   Card c1;
-  Card c2;
+  c1 = Card("4_S");
 
-  std::cout << "size of deck: " << d.size() << std::endl;
+  std::cout << c1 << std::endl;
 
-  // c1 = d.cPickCard(d);
-  // c2 = d.cPickCard(d);
+  d.initialDeck();
+  std::cout << "initial deck: " << d << std::endl;
+
+  d.removeCard(c1);
+  std::cout << "after remove: " << d << std::endl;
+  //
+  // std::cout << "size of deck: " << d.size() << std::endl;
 
   // std::cout << c1 << std::endl;
   // std::cout << c2 << std::endl;
@@ -227,8 +233,8 @@ int main()
   // }
   // else
   //   std::cout << "the cards are not the same!" << std::endl;
-  //
-  // std::cout << "program finished" << std::endl;
+
+  std::cout << "program finished" << std::endl;
   // std::vector<Card> fiveCards(5);
   // for(int i = 0; i < 5; i++)
   // {
