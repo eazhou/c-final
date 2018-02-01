@@ -3,39 +3,89 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include <string.h>
-
 
 class Card;
 class Deck;
-
 
 class Card
 {
   std::string name;
   std::string suit;
+  std::string faceValue;
   int num;
+
 
 public:
   Card(std::string suit, int num) :suit(suit), num(num)
   {
-      if(num == 11)
-        name = "J_" + suit;
-
-      else if(num == 12)
-        name = "Q_" + suit;
-
-      else if(num == 13)
-        name = "K_" + suit;
-
-      else if(num == 1)
-        name = "A_" + suit;
-
-      else
-        name = num + "_" + suit;
-
+    if(num == 11)
+    {
+      name = "J_" + suit;
+      faceValue = "J";
+    }
+    else if(num == 12)
+    {
+      name = "Q_" + suit;
+      faceValue = "Q";
+    }
+    else if(num == 13)
+    {
+      name = "K_" + suit;
+      faceValue = "K";
+    }
+    else if(num == 1)
+    {
+      name = "A_" + suit;
+      faceValue = "A";
+    }
+    else
+    {
+      name = std::to_string(num) + "_" + suit;
+      faceValue = std::to_string(num);
+    }
   }
 
+  Card(std::string name) : name(name)
+  {
+    if(name.substr(0,1) == "10")
+    {
+      num = 10;
+      faceValue = "10";
+      suit = name.substr(3);
+    }
+    else if(name.substr(0) == "J")
+    {
+      num = 11;
+      faceValue = "J";
+      suit = name.substr(2);
+    }
+    else if(name.substr(0) == "Q")
+    {
+      num = 12;
+      faceValue = "Q";
+      suit = name.substr(2);
+    }
+    else if(name.substr(0) == "K")
+    {
+      num = 13;
+      faceValue = "K";
+      suit = name.substr(2);
+    }
+    else if(name.substr(0) == "A")
+    {
+      num = 1;
+      faceValue = "A";
+      suit = name.substr(2);
+    }
+    else
+    {
+      num = (int) (name.at(0) - '0');
+      faceValue = name.substr(0);
+      suit = name.substr(2);
+    }
+  }
+
+  Card(){};
 
   friend std::istream &operator>>(std::istream &is, Card &c)
   {
@@ -48,30 +98,83 @@ public:
       os << c.name;
       return os;
   }
+
   std::string getSuit();
   std::string getName();
+  std::string getFaceValue();
   int getNum();
+  bool operator==(const Card &c);
+  bool operator<(const Card &c);
+  bool operator>(const Card &c);
 };
+
+std::string Card::getSuit()
+{
+  return suit;
+}
+
+std::string Card::getName()
+{
+  return name;
+}
+
+//DOESNT WORK, RETURNS NAME
+// std::string Card::getFaceValue()
+// {
+//   return faceValue;
+// }
+
+int Card::getNum()
+{
+  return num;
+}
+
+bool Card::operator==(const Card &c)
+{
+  if ((this->suit == c.suit) && (this->num == c.num)) {return true;}
+  else return false;
+}
+
+bool Card::operator<(const Card &c)
+{
+  if (this->num < c.num) {return true;}
+  else if (this->suit == "C") {return true;}
+  else if ((this->suit == "D") && (c.suit != "C")) {return true;}
+  else if ((this->suit == "H") && (c.suit!= "D")) {return true;}
+  else return false;
+}
+
+bool Card::operator>(const Card &c)
+{
+  if (this->num > c.num) {return true;}
+  else if (this->suit == "S") {return true;}
+  else if ((this->suit == "H") && (c.suit != "S")) {return true;}
+  else if ((this->suit == "D") && (c.suit != "H")) {return true;}
+  else return false;
+}
 
 class Deck
 {
   std::vector<Card> allCards;
-  int numCards;
   std::vector<Card> fiveCards;
 
-
 public:
-  Deck(): numCards(52), allCards(allCards){};
+  Deck(): allCards(allCards){};
 
-  Card cPickCard(Deck d1);
-  //Card pPickCard(Deck d1);
-  Deck removeCard(Deck d1, Card c1);
   void initialDeck();
+  int size();
+  // Deck removeCard(Card c);
+  friend std::ostream &operator<<(std::ostream &os, const Deck &d);
 };
 
 void Deck::initialDeck()
 {
-  std::vector<std::string> suits = {"C","D","H","S"};
+  std::vector<std::string> suits;
+  suits.push_back("C");
+  suits.push_back("D");
+  suits.push_back("H");
+  suits.push_back("S");
+
   for(int num = 1; num <=13; num++)
   {
     for(auto suit : suits)
@@ -81,193 +184,99 @@ void Deck::initialDeck()
   }
 }
 
-Card Deck::cPickCard(Deck d1)
+int Deck::size()
 {
-  int index = rand() % d1.numCards;
-  return allCards.at(index);
+  return allCards.size();
 }
 
-Deck Deck::removeCard(Deck d1, Card c1)
+std::ostream &operator<<(std::ostream &os, const Deck &d)
 {
-  //std::vector<int>::iterator newVec;
-  //d1.allCards.
-  //newVec = std::remove(d1.allCards.begin(),d1.allCards.end(),c1);
-  //int pos = find(d1.allCards.begin(),d1.allCards.end(),c1)-d1.allCards.begin();
-  //d1.allCards.erase(d1.allCards.begin()+pos);
-
-  //std::vector<int>::iterator position = std::find(d1.allCards.begin(), d1.allCards.end(), c1);
-  //  if (position != d1.allCards.end()) // == myVector.end() means the element was not found
-  //      d1.allCards.erase(position);
-
-
-  for(auto card1 : d1.allCards)
+  for (int i=0; i<d.allCards.size(); i++)
   {
-    if(card1.getName() == c1.getName()){
-
-    }
-
+    os << d.allCards.at(i) << ", ";
   }
-
-  return d1;
-
-
-  //auto it = std::find(d1.allCards.begin(), d1.allCards.end(), c1)
-  //if(it != d1.allCards.end())
-  //  d1.allCards.erase(it);
-
-  //return d1;
+  return os;
 }
 
-
-std::string Card::getSuit(){
-  return suit;
-}
-std::string Card::getName(){
-  return name;
-}
-int Card::getNum(){
-  return num;
-}
-
-std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
+std::vector<Card> determineCards(std::vector<Card> fiveCards)
 {
-  int index1;
-  int index2;
-  std::vector<int> indexes;
-
-  for (int i = 0; i < 5; i++)
-  {
-    for (int j = i+1; j < 5; i++)
-    {
-      if (fiveCards.at(i).getSuit() == fiveCards.at(j).getSuit())
-      {
-        index1 = i;
-        index2 = j;
-        indexes.push_back(i);
-        indexes.push_back(j);
-        return indexes;
+  std::vector<Card> sameSuitCards;
+  for (int i=0; i<5; i++) {
+    for (int j=i+1; j<5; j++) {
+      if ((i != j) && (fiveCards.at(i).getSuit() == fiveCards.at(j).getSuit())) {
+        sameSuitCards.push_back(fiveCards[i]);
+        sameSuitCards.push_back(fiveCards[j]);
       }
     }
   }
 
-}
-int difference(int index1, int index2, std::vector<Card> fiveCards){
-  //returns the difference between the two numbers needed in threeCards function
   int diff;
-  bool firstGreater = true;
-  if (fiveCards.at(index1).getNum()>fiveCards.at(index2).getNum()){
-    diff = fiveCards.at(index1).getNum()-fiveCards.at(index2).getNum();
+  if (sameSuitCards[0].getNum() > sameSuitCards[1].getNum())
+    diff = sameSuitCards[0].getNum() - sameSuitCards[1].getNum();
+  else
+    diff = sameSuitCards[1].getNum() - sameSuitCards[0].getNum();
+
+  Card visibleCard;
+  Card hiddenCard;
+
+  int diff_encode;
+  if (diff>6) {
+    visibleCard = sameSuitCards[0];
+    hiddenCard = sameSuitCards[1];
+    diff_encode = 13-diff;
   }
-  else{
-    diff = fiveCards.at(index2).getNum()-fiveCards.at(index1).getNum();
-    firstGreater = false;
+  else {
+    visibleCard = sameSuitCards[1];
+    hiddenCard = sameSuitCards[0];
+    diff_encode = diff;
   }
 
-
-  if (diff>7){
-    if (firstGreater){
-      return 13+fiveCards.at(index2).getNum()-fiveCards.at(index1).getNum();
-    }
-    else{
-      return 13+fiveCards.at(index1).getNum()-fiveCards.at(index2).getNum();
-    }
-  }
-  else{
-    return diff;
-  }
-}
-
-int hiddenCard(int index1, int index2, std::vector<Card> fiveCards){
-  //returns the index of the hidden Card
-  int diff;
-  bool firstGreater = true;
-  if (fiveCards.at(index1).getNum()>fiveCards.at(index2).getNum()){
-    diff = fiveCards.at(index1).getNum()-fiveCards.at(index2).getNum();
-  }
-  else{
-    diff = fiveCards.at(index2).getNum()-fiveCards.at(index1).getNum();
-    firstGreater = false;
-  }
-
-  if (diff>7){
-    if (firstGreater){
-      return index1;
-    }
-    else{
-      return index2;
-    }
-  }
-  else{
-    if (firstGreater){
-      return index2;
-    }
-    else{
-      return index1;
-    }
-  }
-}
-
-int firstCard(int index1, int index2, int indexHidden){
-  //returns the index of the first card
-  if (indexHidden == index1){
-    return index2;
-  }
-  else{
-    return index1;
-  }
-}
-
-std::vector<Card> nextThreeCards(int index1, int index2, std::vector<Card> fiveCards, int diff ){
-  //returns a vector of the three cards in order
   std::vector<Card> threeCards;
-  for (int i = 0; i < 5; i++){
-    if (i == index1 or i == index2){}
-    else{
-      threeCards.push_back(fiveCards.at(i));
-    }
+  for (int k=0; k<5; k++) {
+    if ((fiveCards[k] == sameSuitCards[0]) || (fiveCards[k] == sameSuitCards[1])) {}
+    else
+      threeCards.push_back(fiveCards[k]);
   }
+
   int min = 0;
   int max = 0;
   int mid = 0;
-  for (int i = 1; i < 3; i++){
-    if (threeCards.at(i).getNum() > threeCards.at(max).getNum()){
-      max = i;
-    }
-    if (threeCards.at(i).getNum() < threeCards.at(min).getNum()){
-      min = i;
-    }
-  }
-  for (int i = 0; i < 3; i++){
-    if (max == i or min == i){
 
-    }
-    else{
-      mid = i;
-    }
+//something wrong w/ this part: putting in 5_C, 3_D, A_H, 3_H, 5_H does not give right ordered triple
+
+  for (int m = 0; m < 3; m++)
+  {
+    if (threeCards.at(m) > threeCards.at(max))
+      max = m;
+    if (threeCards.at(m) < threeCards.at(min))
+      min = m;
+    if ((max != m) && (min != m))
+      mid = m;
   }
 
   std::vector<Card> ordered;
-  if (diff == 1){
+  ordered.push_back(visibleCard);
+  if (diff_encode == 1){
     ordered.push_back(threeCards.at(min));
     ordered.push_back(threeCards.at(mid));
     ordered.push_back(threeCards.at(max));
   }
-  else if (diff == 2){
+  else if (diff_encode == 2){
     ordered.push_back(threeCards.at(min));
     ordered.push_back(threeCards.at(max));
     ordered.push_back(threeCards.at(mid));
   }
-  else if (diff == 3){
+  else if (diff_encode == 3){
     ordered.push_back(threeCards.at(mid));
     ordered.push_back(threeCards.at(min));
     ordered.push_back(threeCards.at(max));
   }
-  else if (diff == 4){
+  else if (diff_encode == 4){
     ordered.push_back(threeCards.at(mid));
     ordered.push_back(threeCards.at(max));
     ordered.push_back(threeCards.at(min));
   }
-  else if (diff == 5){
+  else if (diff_encode == 5){
     ordered.push_back(threeCards.at(max));
     ordered.push_back(threeCards.at(min));
     ordered.push_back(threeCards.at(mid));
@@ -277,32 +286,53 @@ std::vector<Card> nextThreeCards(int index1, int index2, std::vector<Card> fiveC
     ordered.push_back(threeCards.at(mid));
     ordered.push_back(threeCards.at(min));
   }
+  ordered.push_back(hiddenCard);
   return ordered;
-
-
-
 }
 
+bool guessIsRight(Card guess, Card hiddenCard)
+{
+  if(guess.getName() == hiddenCard.getName())
+    return true;
+  else
+    return false;
+}
 
 int main()
 {
   Deck d;
+  Card c1;
+  std::vector<Card> fiveCards; //the five cards to be ordered
+  std::vector<Card> orderedCards; //visible card, three cards encoding difference, and hidden card
 
-  std::vector<Card> fiveCards(5);
   for(int i = 0; i < 5; i++)
   {
-    std::cout << "Enter your card";
-    std::string c1;
-    std::cin >> c1;
-    c1.substr(0);
+    std::cout << "Enter your card: ";
+    std::string input1;
+    std::cin >> input1;
+
+    c1 = Card(input1);
     fiveCards.push_back(c1);
-    d.removeCard(c1);
+  //  d.removeCard(c1);
   }
 
+  orderedCards = determineCards(fiveCards);
 
+  std::cout << "I will display four of the five cards chosen. Then, guess the fifth hidden card." << std::endl;
 
+  for(int j=0; j<4; j++)
+  {
+    std::cout << orderedCards.at(j) << ", ";
+  }
 
+  std::string guess;
+  std::cin >> guess;
 
+  Card cGuess = Card(guess);
+  if(guessIsRight(cGuess,orderedCards.at(4)))
+    std::cout << "YAY YOU GUESSED IT RIGHT" << std::endl;
+  else
+    std::cout << "WRONG. STEW-PID!! CORRECT CARD: " << orderedCards.at(4) << std::endl;
 
   return 0;
 }
