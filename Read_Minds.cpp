@@ -139,7 +139,7 @@ std::vector<int> sameIndexCards(std::vector<Card> fiveCards)
 {
   int index1;
   int index2;
-  std::vector<int> indexes(2);
+  std::vector<int> indexes;
 
   for (int i = 0; i < 5; i++)
   {
